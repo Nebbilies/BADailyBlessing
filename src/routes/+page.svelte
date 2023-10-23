@@ -98,7 +98,7 @@
             <div class="flex-col flex float justify-center items-center gap-2 w-72 h-44 p-6 bg-gray-800 font-bold text-white text-center border-4 rounded-xl">
                 <div class="text-xl">Scroll/Zoom out to match your display!</div>
                 <Icon icon="ic:sharp-swipe" class="h-3/4 w-3/4"/>
-                <audio src="/Theme_97.ogg" hidden loop autoplay></audio>
+                <audio src="/Theme_97.ogg" hidden loop></audio>
             </div>
         </div>
     </div>
@@ -112,19 +112,19 @@
                 </div>
                 <div class="grid grid-cols-2 items-center justify-center gap-2 px-7">
                     <div class="relative w-[700px] ml-40 float">
-                        <img src={aruContent} alt="Aru" class="w-full h-full object-contain">
+                        <img src={aruContent} alt="Aru" class="nodrag w-full h-full object-contain">
                     </div>
                     <div class="flex flex-col justify-center items-center h-full">
                         <div class="absolute z-10 top-20 w-[500px]">
-                            <img src="Banner.png" class="w-full h-full object-contain" alt="Banner">
+                            <img src="Banner.png" class="nodrag w-full h-full object-contain" alt="Banner">
                         </div>
                         <div class="absolute w-[1000px]">
-                            <img src="/Omikuji_Shop.png" alt="Omikuji" class="w-full h-full object-contain">
+                            <img src="/Omikuji_Shop.png" alt="Omikuji" class="nodrag w-full h-full object-contain">
                         </div>
                         <div>
                             <div class="relative">
                                 <div class="relative flex justify-center z-10 h-[450px] duration-1000" id="omikujiBox">
-                                    <img src={omikujiContent} alt="Omikuji" class="w-full h-full object-contain"/>
+                                    <img src={omikujiContent} alt="Omikuji" class="nodrag w-full h-full object-contain"/>
                                 </div>
                             </div>
                         </div>
