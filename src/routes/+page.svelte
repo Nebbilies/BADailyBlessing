@@ -1,3 +1,8 @@
+<head>
+    <title>
+        Omikuji
+    </title>
+</head>
 <script>
     import Icon from '@iconify/svelte';
     import {onMount} from 'svelte';
@@ -6,7 +11,23 @@
         const btn = document.querySelector('button.choose');
         const audioBtn = document.querySelector('button.audio');
         const bgAudio = document.querySelector("audio");
+        const omikujiBox = document.querySelector('#omikujiBox');
+        const omikujiPaper = document.querySelector('#omikujiPaper');
         const now = new Date();
+        //Wait for the page to load
+        document.onreadystatechange = function () {
+            if (document.readyState !== "complete") {
+                document.querySelector(
+                    ".all").classList.add('hidden')
+                document.querySelector(
+                    "#loader").classList.add('opacity-100')
+            } else {
+                document.querySelector(
+                    "#loader").classList.add('opacity-0')
+                document.querySelector(
+                    ".all").classList.add('opacity-100')
+            }
+        };
         //Check if the user has pulled today
         if (localStorage.getItem('lastPull') !== JSON.stringify(now.getDate())) {
             localStorage.setItem('hasPulled',"0");
@@ -43,11 +64,24 @@
                 return a[5];
             }
         }
+        //Randomize the Omikuji on User load
+        const random = randomBlessing();
+        let randomOnLoad = () => {
+            let x = Math.floor((Math.random() * 4 + 1));
+            omikujiContent = `Omikuji_${random}${x}.png`;
+        }
+        randomOnLoad();
         //Maintaining data if user has pulled today
             if (localStorage.getItem('hasPulled') === "1") {
                 omikujiContent = localStorage.getItem('omikuji');
                 aruContent = localStorage.getItem('aru');
-                btn.classList.add('off');
+                setTimeout(() => {
+                    btn.classList.add('off');
+                }, 30)
+                omikujiBox.classList.add('active');
+                setTimeout(() => {
+                    omikujiPaper.classList.add('active');
+                }, 1200)
             }
         //Audio button
         audioBtn.addEventListener('click',() => {
@@ -60,22 +94,27 @@
                 buttonIcon = 'charm:sound-mute';
             }
         })
+        //Omikuji Animation
+        let omikujiAnimation = () => {
+            setTimeout(() => {
+                omikujiPaper.classList.add('active');
+            }, 1700)
+            setTimeout(() => {
+                omikujiBox.classList.add('opacity-0');
+            }, 2650)
+        }
         //Pulling the Omikuji
         btn.addEventListener('click', () => {
-            const omikujiBox = document.querySelector('#omikujiBox');
-            const random = randomBlessing();
             const d = new Date();
             localStorage.setItem('lastPull', JSON.stringify(d.getDate()))
             let x = Math.floor((Math.random() * 4 + 1));
             omikujiBox.classList.add('active');
             btn.classList.add('off');
             btn.classList.remove('hover:bg-yellow-700');
-            setTimeout(() => {
+            /*setTimeout(() => {
                 omikujiContent = `Omikuji_${random}${x}.png`;
-            }, 1500)
-            setTimeout(() => {
-                omikujiBox.classList.remove('active');
-            }, 1700)
+            }, 1500)*/
+            omikujiAnimation();
             setTimeout(() => {
                 aruContent = `Aru_${random}.png`;
                 //btn.innerHTML = 'Come back Daily!'
@@ -87,12 +126,13 @@
             }, 1901)
         })
     });
-    let omikujiContent = "Omikuji_box.png";
+    let omikujiContent;
     let aruContent = "Aru.png";
     let buttonIcon = 'charm:sound-down';
 </script>
 
-<div>
+<div class="all">
+    <div class="absolute top-0 right-0 left-0 bottom-0 self-center" id="loader"></div>
     <div class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hide">
         <div class="flex justify-center items-center">
             <div class="flex-col flex float justify-center items-center gap-2 w-72 h-44 p-6 bg-gray-800 font-bold text-white text-center border-4 rounded-xl">
@@ -124,11 +164,14 @@
                         <div>
                             <div class="relative">
                                 <div class="relative flex justify-center z-10 h-[450px] duration-1000" id="omikujiBox">
-                                    <img src={omikujiContent} alt="Omikuji" class="nodrag w-full h-full object-contain"/>
+                                    <img src='/Omikuji_box.png' alt="Omikuji" class="nodrag w-full h-full object-contain"/>
                                 </div>
                             </div>
+                            <div class="flex absolute z-10 w-[890px] bottom-[350px] right-[50px] duration-1000" id="omikujiPaper">
+                                <img src={omikujiContent} alt="Omikuji" class="nodrag w-full h-full"/>
+                            </div>
                         </div>
-                        <div class="h-16 flex justify-center relative top-20 z-10 w-[520px]">
+                        <div class="h-16 flex justify-center relative top-20 z-20 w-[520px] ">
                             <button class="choose brightness-[1.2] text-white font-bold py-2 px-4 rounded-full transition duration-300">
                                 <img src="/Button1.png" alt="button">
                             </button>
@@ -141,6 +184,19 @@
 </div>
 
 <style>
+    #loader {
+        border: 12px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 12px solid #444444;
+        width: 70px;
+        height: 70px;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
     .background {
         background-image: url("/BG_NewYearFestival.png");
         background-position: top;
@@ -179,6 +235,17 @@
     }
 
     :global(#omikujiBox.active) {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    :global(#omikujiPaper.active) {
+/*        position: relative;*/
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    :global(#omikujiPaper) {
         transform: translateY(100px);
         opacity: 0;
     }
