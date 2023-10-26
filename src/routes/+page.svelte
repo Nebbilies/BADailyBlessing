@@ -35,7 +35,7 @@
         //Audio player
         setTimeout(() => {
             bgAudio.play();
-        }, 500)
+        },700)
         bgAudio.volume = 0.15;
         //Randomize
         let randomBlessing = () => {
@@ -75,6 +75,8 @@
             if (localStorage.getItem('hasPulled') === "1") {
                 omikujiContent = localStorage.getItem('omikuji');
                 aruContent = localStorage.getItem('aru');
+
+                bgAudio.play();
                 setTimeout(() => {
                     btn.classList.add('off');
                 }, 30)
@@ -132,7 +134,7 @@
 </script>
 
 <div class="all">
-    <div class="absolute top-0 right-0 left-0 bottom-0 self-center" id="loader"></div>
+<!--    <div class="absolute top-0 right-0 left-0 bottom-0 self-center" id="loader"></div>-->
     <div class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hide">
         <div class="flex justify-center items-center">
             <div class="flex-col flex float justify-center items-center gap-2 w-72 h-44 p-6 bg-gray-800 font-bold text-white text-center border-4 rounded-xl">
