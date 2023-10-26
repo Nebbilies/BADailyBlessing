@@ -33,9 +33,9 @@
             localStorage.setItem('hasPulled',"0");
         }
         //Audio player
-        setTimeout(() => {
+/*        setTimeout(() => {
             bgAudio.play();
-        },700)
+        },700)*/
         bgAudio.volume = 0.15;
         //Randomize
         let randomBlessing = () => {
@@ -75,8 +75,6 @@
             if (localStorage.getItem('hasPulled') === "1") {
                 omikujiContent = localStorage.getItem('omikuji');
                 aruContent = localStorage.getItem('aru');
-
-                bgAudio.play();
                 setTimeout(() => {
                     btn.classList.add('off');
                 }, 30)
@@ -130,7 +128,7 @@
     });
     let omikujiContent;
     let aruContent = "Aru.png";
-    let buttonIcon = 'charm:sound-down';
+    let buttonIcon = 'charm:sound-mute';
 </script>
 
 <div class="all">
